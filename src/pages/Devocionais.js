@@ -12,15 +12,15 @@ const Devocionais = () => {
           <button className="nav-button" onClick={() => navigate('/')}>
             Início
           </button>
+          <h1 className="devocionais-title">Palavra Viva</h1>
           <button className="nav-button" onClick={() => navigate('/biblia')}>
             Bíblia
           </button>
         </header>
         <main className="devocionais-main">
-          <h1 className="devocionais-title">Devocionais</h1>
           <div className="devocional-content">
             <button className="nav-arrow left-arrow">{'<'}</button>
-            <p>Devocional do dia - Aqui será mostrado o conteúdo do devocional de hoje.</p>
+            <p>Selecione um devocional.<br />Utilize as setas para navegar entre as datas.</p>
             <button className="nav-arrow right-arrow">{'>'}</button>
           </div>
         </main>
