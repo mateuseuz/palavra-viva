@@ -19,7 +19,7 @@ const Home = () => {
             <p>Leia e medite nos devocionais<br />especialmente selecionados para você.</p>
           </section>
           <section className="home-section">
-            <button className="cta-button">
+            <button className="cta-button" onClick={() => navigate('/biblia')}>
               Bíblia Sagrada
             </button>
             <p>Mergulhe na Palavra de Deus<br />e permita que ela fale ao seu coração.</p>
