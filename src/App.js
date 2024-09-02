@@ -9,6 +9,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/devocionais" element={<Devocionais />} />
+        <Route path="/biblia" element={<div>Página da Bíblia em construção</div>} />
       </Routes>
     </Router>
   );
