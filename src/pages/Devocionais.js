@@ -1,10 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Devocionais.css';
+import devocionaisData from './devocionais.json';
 
 const Devocionais = () => {
   const navigate = useNavigate();
   const [isModalOpen, setModalOpen] = useState(false);
+  const [devocionalAtual, setDevocionalAtual] = useState(null);
+
+  useEffect(() => {
+    // Carrega o primeiro devocional ou um aleatório
+    const devocionalAleatorio = devocionaisData[Math.floor(Math.random() * devocionaisData.length)];
+    setDevocionalAtual(devocionalAleatorio);
+  }, []);
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
@@ -24,15 +32,16 @@ const Devocionais = () => {
         <main className="devocionais-main">
           <p className="devocional-instruction">Selecione um devocional.<br />Utilize as setas para navegar entre as datas.</p>
           <div className="devocional-content">
-            <button className="nav-arrow left-arrow">
+            <button className="nav-arrow left-arrow" onClick={() => setDevocionalAtual(devocionaisData[(devocionaisData.indexOf(devocionalAtual) - 1 + devocionaisData.length) % devocionaisData.length])}>
               <span className="arrow-icon">{'<'}</span>
             </button>
-            <div className="devocional-box" onClick={openModal}>
-              <h2>Devocional do Dia</h2>
-              <p>João 14:23</p>
-              <p>A alegria na obediência</p>
-            </div>
-            <button className="nav-arrow right-arrow">
+            {devocionalAtual && (
+              <div className="devocional-box" onClick={openModal}>
+                <h2>{devocionalAtual.title}</h2>
+                <p>{devocionalAtual.verse}</p>
+              </div>
+            )}
+            <button className="nav-arrow right-arrow" onClick={() => setDevocionalAtual(devocionaisData[(devocionaisData.indexOf(devocionalAtual) + 1) % devocionaisData.length])}>
               <span className="arrow-icon">{'>'}</span>
             </button>
           </div>
@@ -42,15 +51,13 @@ const Devocionais = () => {
         <p>Centro Universitário Filadélfia &copy; 2024. Todos os direitos reservados.</p>
       </footer>
 
-      {isModalOpen && (
+      {isModalOpen && devocionalAtual && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <h2>A Alegria na Obediência - Jo. 14:23</h2>
-            <p>"Jesus respondeu: 'Se alguém me ama, obedecerá à minha palavra. Meu Pai o amará, e nós viremos a ele e faremos morada nele.'</p>
-            <p>Reflexão do versículo:<br />
-            A obediência às palavras de Jesus é uma demonstração de nosso amor por Ele. Quando seguimos Seus ensinamentos, não apenas mostramos nossa devoção, mas também permitimos que Deus habite em nós. A verdadeira alegria vem de viver em harmonia com a vontade de Deus, e essa obediência traz a presença de Deus para nossa vida. Que possamos encontrar alegria ao seguir Seus caminhos e permitir que Ele faça morada em nós.</p>
-            <p>Oração:<br />
-            Senhor, ajuda-me a obedecer a Tua palavra e a viver de acordo com os Teus ensinamentos. Que a Tua presença habite em mim e que eu encontre alegria em seguir a Tua vontade. Em nome de Jesus, amém.</p>
+            <h2>{devocionalAtual.title} - {devocionalAtual.verse}</h2>
+            {devocionalAtual.content.map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
+            ))}
             <button className="close-button" onClick={closeModal}>Fechar</button>
           </div>
         </div>
