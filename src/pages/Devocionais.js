@@ -18,10 +18,19 @@ const Devocionais = () => {
           </button>
         </header>
         <main className="devocionais-main">
+          <p className="devocional-instruction">Selecione um devocional.<br />Utilize as setas para navegar entre as datas.</p>
           <div className="devocional-content">
-            <button className="nav-arrow left-arrow">{'<'}</button>
-            <p>Selecione um devocional.<br />Utilize as setas para navegar entre as datas.</p>
-            <button className="nav-arrow right-arrow">{'>'}</button>
+            <button className="nav-arrow left-arrow">
+              <span className="arrow-icon">{'<'}</span>
+            </button>
+            <div className="devocional-box">
+              <h2>Devocional do Dia</h2>
+              <p>João 14:23</p>
+              <p>A alegria na obediência</p>
+            </div>
+            <button className="nav-arrow right-arrow">
+              <span className="arrow-icon">{'>'}</span>
+            </button>
           </div>
         </main>
       </div>

@@ -26,9 +26,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
   }
-
+  
   .nav-button {
     background-color: #ffffffee;
     color: #173d44cc;
@@ -55,33 +55,70 @@
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
   }
   
+  .devocional-instruction {
+    font-size: 1.5rem;
+    color: #ffffff;
+    margin-bottom: 40px;
+    font-weight: 500;
+    line-height: 1.6;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  }
+  
   .devocional-content {
     display: flex;
     align-items: center;
     justify-content: space-between;
-  }
-  
-  .devocional-content p {
-    font-size: 1.5rem;
-    color: #ffffff;
-    font-weight: 500;
-    line-height: 1.6;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-    flex-grow: 1;
-    text-align: center;
+    position: relative;
+    margin-top: 40px;
   }
   
   .nav-arrow {
-    background-color: transparent;
-    color: #ffffff;
+    background-color: #ffffffee;
+    color: #173d44cc;
     border: none;
     font-size: 2rem;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
     cursor: pointer;
-    margin: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+    margin: 0 60px;
   }
   
   .nav-arrow:hover {
-    color: #c1d6e0;
+    background-color: #2549509f;
+    color: #ffffffee;
+  }
+  
+  .devocional-box {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 100%;
+    height: 170px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .devocional-box h2 {
+    font-size: 1.8rem;
+    color: #173d44;
+    margin-bottom: 15px;
+  }
+  
+  .devocional-box p {
+    font-size: 1.2rem;
+    color: #173d44cc;
+    line-height: 1.4;
+    margin-bottom: 15px;
   }
   
   .footer {
