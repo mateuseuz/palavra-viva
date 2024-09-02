@@ -24,10 +24,11 @@
   
   .devocionais-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around; /* Alterado para aproximar os botões */
     align-items: center;
     margin-bottom: 0px;
   }
+  
   
   .nav-button {
     background-color: #ffffffee;
