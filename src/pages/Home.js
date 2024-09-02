@@ -1,7 +1,10 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Home.css';
 
 const Home = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="page-container">
       <div className="content-container">
@@ -10,11 +13,15 @@ const Home = () => {
         </header>
         <main className="home-main">
           <section className="home-section">
-            <button className="cta-button">Devocionais Diários</button>
+            <button className="cta-button" onClick={() => navigate('/devocionais')}>
+              Devocionais Diários
+            </button>
             <p>Leia e medite nos devocionais<br />especialmente selecionados para você.</p>
           </section>
           <section className="home-section">
-            <button className="cta-button">Bíblia Sagrada</button>
+            <button className="cta-button">
+              Bíblia Sagrada
+            </button>
             <p>Mergulhe na Palavra de Deus<br />e permita que ela fale ao seu coração.</p>
           </section>
         </main>
