@@ -109,6 +109,12 @@
     line-height: 1.6;
 }
 
+.biblia-texto sup {
+    font-size: 0.8rem; /* Tamanho menor para os números dos versículos */
+    vertical-align: super;
+    color: #173d44;
+}
+
 .footer {
     color: white;
     text-align: center;

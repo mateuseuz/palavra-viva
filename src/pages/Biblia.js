@@ -4,40 +4,35 @@ import './Biblia.css';
 
 const Biblia = () => {
   const navigate = useNavigate();
-  const [livros, setLivros] = useState([]);
-  const [capitulos, setCapitulos] = useState([]);
-  const [textoBiblia, setTextoBiblia] = useState('');
   const [livroSelecionado, setLivroSelecionado] = useState('Gênesis');
   const [capituloSelecionado, setCapituloSelecionado] = useState(1);
+  const [textoBiblia, setTextoBiblia] = useState('');
 
-  useEffect(() => {
-    // Função que carrega os livros da Bíblia da API
-    const carregarLivros = async () => {
-      // Exemplo de como você poderia buscar os livros da Bíblia usando uma API
-      const livrosDaBiblia = ['Gênesis', 'Êxodo', 'Levítico', 'Números', 'Deuteronômio']; // Exemplo estático
-      setLivros(livrosDaBiblia);
-    };
-
-    carregarLivros();
-  }, []);
-
-  useEffect(() => {
-    // Função que carrega os capítulos do livro selecionado
-    const carregarCapitulos = async () => {
-      // Exemplo de como você poderia buscar os capítulos do livro usando uma API
-      const capitulosDoLivro = Array.from({ length: 50 }, (_, i) => i + 1); // Exemplo estático de 50 capítulos
-      setCapitulos(capitulosDoLivro);
-    };
-
-    carregarCapitulos();
-  }, [livroSelecionado]);
+  const livrosDaBiblia = [
+    'Gênesis', 'Êxodo', 'Levítico', 'Números', 'Deuteronômio',
+    'Josué', 'Juízes', 'Rute', '1 Samuel', '2 Samuel', '1 Reis', '2 Reis',
+    '1 Crônicas', '2 Crônicas', 'Esdras', 'Neemias', 'Ester', 'Jó', 'Salmos',
+    'Provérbios', 'Eclesiastes', 'Cantares', 'Isaías', 'Jeremias', 'Lamentações',
+    'Ezequiel', 'Daniel', 'Oséias', 'Joel', 'Amós', 'Obadias', 'Jonas', 'Miquéias',
+    'Naum', 'Habacuque', 'Sofonias', 'Ageu', 'Zacarias', 'Malaquias', 'Mateus',
+    'Marcos', 'Lucas', 'João', 'Atos', 'Romanos', '1 Coríntios', '2 Coríntios',
+    'Gálatas', 'Efésios', 'Filipenses', 'Colossenses', '1 Tessalonicenses',
+    '2 Tessalonicenses', '1 Timóteo', '2 Timóteo', 'Tito', 'Filemom', 'Hebreus',
+    'Tiago', '1 Pedro', '2 Pedro', '1 João', '2 João', '3 João', 'Judas', 'Apocalipse'
+  ];
 
   useEffect(() => {
     // Função que carrega o texto do capítulo selecionado
     const carregarTexto = async () => {
-      // Aqui você faria a chamada à API para obter o texto do capítulo
-      const textoExemplo = `Aqui está o texto de ${livroSelecionado} capítulo ${capituloSelecionado}.`;
-      setTextoBiblia(textoExemplo);
+      try {
+        const response = await fetch(`https://bible-api.com/${livroSelecionado}%20${capituloSelecionado}?translation=almeida`);
+        const data = await response.json();
+        const texto = data.verses.map(verso => `<sup>[${verso.verse}]</sup> ${verso.text}`).join(' ');
+        setTextoBiblia(texto);
+      } catch (error) {
+        console.error('Erro ao carregar o texto:', error);
+        setTextoBiblia('Texto não encontrado.');
+      }
     };
 
     carregarTexto();
@@ -63,7 +58,7 @@ const Biblia = () => {
               value={livroSelecionado}
               onChange={(e) => setLivroSelecionado(e.target.value)}
             >
-              {livros.map((livro) => (
+              {livrosDaBiblia.map(livro => (
                 <option key={livro} value={livro}>
                   {livro}
                 </option>
@@ -74,16 +69,16 @@ const Biblia = () => {
               value={capituloSelecionado}
               onChange={(e) => setCapituloSelecionado(Number(e.target.value))}
             >
-              {capitulos.map((capitulo) => (
-                <option key={capitulo} value={capitulo}>
-                  {capitulo}
+              {[...Array(150).keys()].map(i => (
+                <option key={i + 1} value={i + 1}>
+                  {i + 1}
                 </option>
               ))}
             </select>
           </div>
           <div className="biblia-texto">
             <h2>{livroSelecionado} {capituloSelecionado}</h2>
-            <p>{textoBiblia}</p>
+            <p dangerouslySetInnerHTML={{ __html: textoBiblia }}></p>
           </div>
         </main>
       </div>
