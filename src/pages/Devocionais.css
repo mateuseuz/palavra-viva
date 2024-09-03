@@ -94,6 +94,18 @@
   color: #ffffffee;
 }
 
+.nav-arrow.disabled {
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.nav-arrow.disabled:hover {
+  background-color: #cccccc;
+  color: #666666;
+}
+
 .devocional-box {
   background-color: rgba(255, 255, 255, 0.8);
   padding: 20px;

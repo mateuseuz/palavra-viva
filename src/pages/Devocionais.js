@@ -6,16 +6,44 @@ import devocionaisData from './devocionais.json';
 const Devocionais = () => {
   const navigate = useNavigate();
   const [isModalOpen, setModalOpen] = useState(false);
+  const [devocionalAtualIndex, setDevocionalAtualIndex] = useState(0);
   const [devocionalAtual, setDevocionalAtual] = useState(null);
+  const [devocionaisComDatas, setDevocionaisComDatas] = useState([]);
 
   useEffect(() => {
-    // Carrega o primeiro devocional ou um aleatório
-    const devocionalAleatorio = devocionaisData[Math.floor(Math.random() * devocionaisData.length)];
-    setDevocionalAtual(devocionalAleatorio);
+    const today = new Date();
+    const devocionaisAtualizados = devocionaisData.map((devocional, index) => {
+      const dataDevocional = new Date(today);
+      dataDevocional.setDate(today.getDate() - index);
+      return {
+        ...devocional,
+        date: dataDevocional.toLocaleDateString('pt-BR')
+      };
+    });
+
+    setDevocionaisComDatas(devocionaisAtualizados);
+    setDevocionalAtualIndex(0); // Sempre começa com o devocional mais recente
+    setDevocionalAtual(devocionaisAtualizados[0]);
   }, []);
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
+
+  const handlePrevious = () => {
+    if (devocionalAtualIndex < devocionaisComDatas.length - 1) {
+      const newIndex = devocionalAtualIndex + 1;
+      setDevocionalAtualIndex(newIndex);
+      setDevocionalAtual(devocionaisComDatas[newIndex]);
+    }
+  };
+
+  const handleNext = () => {
+    if (devocionalAtualIndex > 0) {
+      const newIndex = devocionalAtualIndex - 1;
+      setDevocionalAtualIndex(newIndex);
+      setDevocionalAtual(devocionaisComDatas[newIndex]);
+    }
+  };
 
   return (
     <div className="page-container">
@@ -32,16 +60,25 @@ const Devocionais = () => {
         <main className="devocionais-main">
           <p className="devocional-instruction">Selecione um devocional.<br />Utilize as setas para navegar entre as datas.</p>
           <div className="devocional-content">
-            <button className="nav-arrow left-arrow" onClick={() => setDevocionalAtual(devocionaisData[(devocionaisData.indexOf(devocionalAtual) - 1 + devocionaisData.length) % devocionaisData.length])}>
+            <button
+              className={`nav-arrow left-arrow ${devocionalAtualIndex === devocionaisComDatas.length - 1 ? 'disabled' : ''}`}
+              onClick={handlePrevious}
+              disabled={devocionalAtualIndex === devocionaisComDatas.length - 1}
+            >
               <span className="arrow-icon">{'<'}</span>
             </button>
             {devocionalAtual && (
               <div className="devocional-box" onClick={openModal}>
                 <h2>{devocionalAtual.title}</h2>
                 <p>{devocionalAtual.verse}</p>
+                <p>{devocionalAtual.date}</p>
               </div>
             )}
-            <button className="nav-arrow right-arrow" onClick={() => setDevocionalAtual(devocionaisData[(devocionaisData.indexOf(devocionalAtual) + 1) % devocionaisData.length])}>
+            <button
+              className={`nav-arrow right-arrow ${devocionalAtualIndex === 0 ? 'disabled' : ''}`}
+              onClick={handleNext}
+              disabled={devocionalAtualIndex === 0}
+            >
               <span className="arrow-icon">{'>'}</span>
             </button>
           </div>
