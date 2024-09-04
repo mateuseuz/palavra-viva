@@ -110,7 +110,7 @@
 }
 
 .biblia-texto sup {
-    font-size: 0.8rem; /* Tamanho menor para os números dos versículos */
+    font-size: 0.8rem;
     vertical-align: super;
     color: #173d44;
 }
@@ -122,4 +122,21 @@
     position: relative;
     bottom: 0;
     width: 100%;
+}
+
+@media (max-width: 768px) {
+    .content-container {
+        padding: 20px 10px;
+        width: 100%;
+        max-width: none;
+    }
+
+    .biblia-title {
+        font-size: 2rem;
+    }
+
+    .nav-button {
+        padding: 10px 20px;
+        font-size: 1.2rem;
+    }
 }
