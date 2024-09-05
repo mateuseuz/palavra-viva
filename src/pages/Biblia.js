@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Biblia.css';
 
-// Versículos dos livros curtos
 const livrosCurtos = {
   '2 João': {
     1: [
@@ -45,7 +44,28 @@ const livrosCurtos = {
       "<sup>[1]</sup> Judas, servo de Jesus Cristo e irmão de Tiago, aos chamados, amados em Deus Pai e guardados em Jesus Cristo,",
       "<sup>[2]</sup> a vocês, misericórdia, paz e amor em abundância.",
       "<sup>[3]</sup> Amados, embora estivesse muito ansioso para escrever-lhes acerca da salvação que compartilhamos, senti que era necessário escrever-lhes insistindo que batalhassem pela fé uma vez por todas confiada aos santos.",
-      // (restante dos versículos de Judas)
+      "<sup>[4]</sup> Pois certos indivíduos, cuja condenação já estava sentenciada há muito tempo, infiltraram-se dissimuladamente no meio de vocês. Eles são ímpios, transformam a graça de nosso Deus em libertinagem e negam Jesus Cristo, nosso único Soberano e Senhor.",
+      "<sup>[5]</sup> Embora vocês já tenham conhecimento de tudo isso, quero lembrá-los de que o Senhor libertou um povo do Egito, mas, posteriormente, destruiu os que não creram.",
+      "<sup>[6]</sup> E, quanto aos anjos que não guardaram sua autoridade, mas abandonaram sua própria morada, ele os tem guardado em trevas, presos com correntes eternas para o julgamento do grande Dia.",
+      "<sup>[7]</sup> De modo semelhante a esses, Sodoma e Gomorra e as cidades em redor se entregaram à imoralidade e a relações sexuais antinaturais. Estando sob o castigo do fogo eterno, elas servem de exemplo.",
+      "<sup>[8]</sup> Da mesma forma, esses sonhadores contaminam o próprio corpo, rejeitam a autoridade e difamam os seres celestiais.",
+      "<sup>[9]</sup> Contudo, nem mesmo o arcanjo Miguel, quando estava disputando com o diabo acerca do corpo de Moisés, se atreveu a fazer acusação injuriosa contra ele, mas disse: O Senhor o repreenda!",
+      "<sup>[10]</sup> Todavia, esses difamam tudo o que não entendem e as coisas que entendem por instinto, como animais irracionais, nessas mesmas coisas se corrompem.",
+      "<sup>[11]</sup> Ai deles! Pois seguiram o caminho de Caim, buscando lucro caíram no erro de Balaão e foram destruídos na rebelião de Corá.",
+      "<sup>[12]</sup> Esses homens são rochas submersas nas festas de fraternidade que vocês fazem, comendo com vocês de maneira desonrosa; são pastores que só cuidam de si mesmos. São nuvens sem água, impelidas pelo vento; árvores de outono, sem frutos, duas vezes mortas, arrancadas pela raiz.",
+      "<sup>[13]</sup> São ondas bravias do mar, espumando seus próprios atos vergonhosos; estrelas errantes, para as quais está reservada para sempre a mais densa escuridão.",
+      "<sup>[14]</sup> Enoque, o sétimo a partir de Adão, profetizou acerca deles: Vejam, o Senhor vem com milhares de seus santos,",
+      "<sup>[15]</sup> para julgar a todos e convencer todos os ímpios acerca de todos os atos de impiedade que eles cometeram impiamente, e acerca de todas as palavras insolentes que os pecadores ímpios disseram contra ele.",
+      "<sup>[16]</sup> Esses homens vivem se queixando, descontentes com a sua sorte, seguem os seus próprios desejos impuros; são cheios de si mesmos e adulam os outros por interesse.",
+      "<sup>[17]</sup> Todavia, amados, lembrem-se do que foi predito pelos apóstolos de nosso Senhor Jesus Cristo.",
+      "<sup>[18]</sup> Eles diziam a vocês: Nos últimos tempos haverá zombadores que seguirão os seus próprios desejos ímpios.",
+      "<sup>[19]</sup> Esses são os que causam divisões entre vocês, os quais seguem a tendência da sua própria alma e não têm o Espírito.",
+      "<sup>[20]</sup> Edifiquem-se, porém, amados, na santíssima fé que vocês têm, orando no Espírito Santo.",
+      "<sup>[21]</sup> Mantenham-se no amor de Deus, enquanto esperam que a misericórdia de nosso Senhor Jesus Cristo os leve para a vida eterna.",
+      "<sup>[22]</sup> Tenham compaixão daqueles que duvidam;",
+      "<sup>[23]</sup> a outros, salvem, arrebatando-os do fogo; a outros, ainda, mostrem misericórdia com temor, odiando até a roupa contaminada pela carne.",
+      "<sup>[24]</sup> Àquele que é poderoso para impedi-los de cair e para apresentá-los diante da sua glória sem mácula e com grande alegria,",
+      "<sup>[25]</sup> ao único Deus, nosso Salvador, sejam glória, majestade, poder e autoridade, mediante Jesus Cristo, nosso Senhor, antes de todos os tempos, agora e para todo o sempre! Amém."
     ]
   }
 };
@@ -98,7 +118,8 @@ const Biblia = () => {
             return response.json();
           })
           .then((data) => {
-            const texto = data.verses.map(verso => `<sup>[${verso.verse}]</sup> ${verso.text}`).join(' ');
+            // Corrigindo espaços extras antes dos números dos versículos
+            const texto = data.verses.map(verso => `<sup>[${verso.verse}]</sup> ${verso.text.replace(/\s{2,}/g, ' ')}`).join(' ');
             setTextoBiblia(texto);
             setErroCarregamento('');
           })
