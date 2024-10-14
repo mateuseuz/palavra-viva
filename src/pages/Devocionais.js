@@ -9,6 +9,7 @@ const Devocionais = () => {
   const [devocionalAtualIndex, setDevocionalAtualIndex] = useState(0);
   const [devocionalAtual, setDevocionalAtual] = useState(null);
   const [devocionaisComDatas, setDevocionaisComDatas] = useState([]);
+  const totalDevocionaisExibir = 7;
 
   useEffect(() => {
     const today = new Date();
@@ -21,9 +22,10 @@ const Devocionais = () => {
       };
     });
 
-    setDevocionaisComDatas(devocionaisAtualizados);
-    setDevocionalAtualIndex(0); // Sempre começa com o devocional mais recente
-    setDevocionalAtual(devocionaisAtualizados[0]);
+    const devocionaisRecentes = devocionaisAtualizados.slice(0, totalDevocionaisExibir);
+    setDevocionaisComDatas(devocionaisRecentes);
+    setDevocionalAtualIndex(0);
+    setDevocionalAtual(devocionaisRecentes[0]);
   }, []);
 
   const openModal = () => setModalOpen(true);
