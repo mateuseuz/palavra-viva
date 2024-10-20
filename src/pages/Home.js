@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Home.css';
 
 const Home = () => {
-  const [visits, setVisits] = useState(0);
   const navigate = useNavigate();
 
   return (
@@ -11,7 +10,6 @@ const Home = () => {
       <div className="content-container">
         <header className="home-header">
           <h1>Bem-vindo(a) ao Palavra Viva!</h1>
-          <p className="visit-counter">Contador de visitas: {visits}</p> {}
         </header>
         <main className="home-main">
           <section className="home-section">
