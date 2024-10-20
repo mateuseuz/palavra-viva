@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Home.css';
 
 const Home = () => {
+  const [visits, setVisits] = useState(0);
   const navigate = useNavigate();
-  const [visitCount, setVisitCount] = useState(0);
 
   useEffect(() => {
-    fetch('https://api.countapi.xyz/hit/palavra-viva/home-page')
+    fetch('/api/visits')
       .then(response => response.json())
-      .then(data => {
-        setVisitCount(data.value);
-      });
+      .then(data => setVisits(data.count))
+      .catch(error => console.error('Error fetching visits:', error));
   }, []);
 
   return (
@@ -19,6 +18,7 @@ const Home = () => {
       <div className="content-container">
         <header className="home-header">
           <h1>Bem-vindo(a) ao Palavra Viva!</h1>
+          <p className="visit-counter">Contador de visitas: {visits}</p>
         </header>
         <main className="home-main">
           <section className="home-section">
@@ -37,7 +37,6 @@ const Home = () => {
       </div>
       <footer className="footer">
         <p>Centro Universitário Filadélfia &copy; 2024. Todos os direitos reservados.</p>
-        <p>Visitas: {visitCount}</p> {}
       </footer>
     </div>
   );
