@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Home.css';
 
 const Home = () => {
   const navigate = useNavigate();
+  const [visitCount, setVisitCount] = useState(0);
+
+  useEffect(() => {
+    fetch('https://api.countapi.xyz/hit/palavra-viva/home-page')
+      .then(response => response.json())
+      .then(data => {
+        setVisitCount(data.value);
+      });
+  }, []);
 
   return (
     <div className="page-container">
@@ -28,6 +37,7 @@ const Home = () => {
       </div>
       <footer className="footer">
         <p>Centro Universitário Filadélfia &copy; 2024. Todos os direitos reservados.</p>
+        <p>Visitas: {visitCount}</p> {}
       </footer>
     </div>
   );

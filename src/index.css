@@ -2,7 +2,6 @@ body {
   font-family: 'Poppins', sans-serif;
   margin: 0;
   padding: 0;
-  overflow: hidden;
   color: #000;
 }
 
@@ -28,12 +27,12 @@ a {
 }
 
 @media (max-width: 768px) {
-    .container {
-        width: 100%;
-        padding: 10px;
-    }
+  .container {
+    width: 100%;
+    padding: 10px;
+  }
 
-    body {
-        overflow-x: hidden;
-    }
+  body {
+    overflow-x: hidden;
+  }
 }
