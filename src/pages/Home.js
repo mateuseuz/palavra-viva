@@ -6,15 +6,6 @@ const Home = () => {
   const [visits, setVisits] = useState(0);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetch('https://simpleanalytics.com/palavra-viva.vercel.app.json?fields=pageviews')
-      .then(response => response.json())
-      .then(data => {
-        setVisits(data.pageviews);
-      })
-      .catch(error => console.error('Erro ao buscar visitas:', error));
-  }, []);
-
   return (
     <div className="page-container">
       <div className="content-container">
