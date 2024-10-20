@@ -7,20 +7,20 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('/api/visits')
+    fetch('https://simpleanalytics.com/palavra-viva.vercel.app.json?fields=pageviews')
       .then(response => response.json())
       .then(data => {
-        setVisits(data.count); // Certifique-se de que "data.count" está correto
+        setVisits(data.pageviews);
       })
-      .catch(error => console.error('Error fetching visits:', error));
-  }, []);  
+      .catch(error => console.error('Erro ao buscar visitas:', error));
+  }, []);
 
   return (
     <div className="page-container">
       <div className="content-container">
         <header className="home-header">
           <h1>Bem-vindo(a) ao Palavra Viva!</h1>
-          <p className="visit-counter">Contador de visitas: {visits}</p>
+          <p className="visit-counter">Contador de visitas: {visits}</p> {}
         </header>
         <main className="home-main">
           <section className="home-section">
