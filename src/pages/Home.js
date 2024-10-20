@@ -9,9 +9,11 @@ const Home = () => {
   useEffect(() => {
     fetch('/api/visits')
       .then(response => response.json())
-      .then(data => setVisits(data.count))
+      .then(data => {
+        setVisits(data.count); // Certifique-se de que "data.count" está correto
+      })
       .catch(error => console.error('Error fetching visits:', error));
-  }, []);
+  }, []);  
 
   return (
     <div className="page-container">
