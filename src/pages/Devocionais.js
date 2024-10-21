@@ -56,11 +56,11 @@ const Devocionais = () => {
     }
   
     const devocionaisRecentes = Object.values(storedDevocionais)
-      .sort((a, b) => new Date(b.date) - new Date(a.date));
+      .sort((a, b) => new Date(a.date) - new Date(b.date));
   
     setDevocionaisComDatas(devocionaisRecentes);
   
-    const currentIndex = 0;
+    const currentIndex = devocionaisRecentes.length - 1;
     setDevocionalAtualIndex(currentIndex);
     setDevocionalAtual(devocionaisRecentes[currentIndex]);
   }, []);  
