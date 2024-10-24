@@ -9,39 +9,67 @@ const Devocionais = () => {
   const [devocionalAtualIndex, setDevocionalAtualIndex] = useState(0);
   const [devocionalAtual, setDevocionalAtual] = useState(null);
   const [devocionaisComDatas, setDevocionaisComDatas] = useState([]);
-  const totalDevocionaisExibir = 7;
+
+  const totalDiasExibir = 7;
 
   useEffect(() => {
     const today = new Date();
-    const devocionaisAtualizados = devocionaisData.map((devocional, index) => {
-      const dataDevocional = new Date(today);
-      dataDevocional.setDate(today.getDate() - index);
-      return {
-        ...devocional,
-        date: dataDevocional.toLocaleDateString('pt-BR')
-      };
-    });
+    const todayKey = today.toLocaleDateString('pt-BR');
+    let storedDevocionais = JSON.parse(localStorage.getItem('devocionaisGuardados')) || {};
 
-    const devocionaisRecentes = devocionaisAtualizados.slice(0, totalDevocionaisExibir);
+    if (!storedDevocionais[todayKey]) {
+      const devocionaisAtualizados = devocionaisData.map((devocional, index) => {
+        const dataDevocional = new Date(today);
+        dataDevocional.setDate(today.getDate() - index - 1);
+        return {
+          ...devocional,
+          date: dataDevocional.toLocaleDateString('pt-BR')
+        };
+      });
+
+      const devocionaisAnteriores = devocionaisAtualizados.slice(0, totalDiasExibir - 1);
+
+      const devocionaisRestantes = devocionaisData.filter(devocional => 
+        !devocionaisAnteriores.some(anteriores => anteriores.title === devocional.title)
+      );
+      const devocionalAleatorio = devocionaisRestantes[Math.floor(Math.random() * devocionaisRestantes.length)];
+
+      storedDevocionais[todayKey] = { ...devocionalAleatorio, date: today.toLocaleDateString('pt-BR') };
+
+      localStorage.setItem('devocionaisGuardados', JSON.stringify(storedDevocionais));
+    }
+
+    const keys = Object.keys(storedDevocionais);
+    if (keys.length > totalDiasExibir) {
+      const keysToRemove = keys.slice(0, keys.length - totalDiasExibir);
+      keysToRemove.forEach(key => delete storedDevocionais[key]);
+      localStorage.setItem('devocionaisGuardados', JSON.stringify(storedDevocionais));
+    }
+
+    const devocionaisRecentes = Object.values(storedDevocionais)
+      .sort((a, b) => new Date(a.date) - new Date(b.date));
+
     setDevocionaisComDatas(devocionaisRecentes);
-    setDevocionalAtualIndex(0);
-    setDevocionalAtual(devocionaisRecentes[0]);
+    
+    const currentIndex = devocionaisRecentes.length - 1;
+    setDevocionalAtualIndex(currentIndex);
+    setDevocionalAtual(devocionaisRecentes[currentIndex]);
   }, []);
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
 
   const handlePrevious = () => {
-    if (devocionalAtualIndex < devocionaisComDatas.length - 1) {
-      const newIndex = devocionalAtualIndex + 1;
+    if (devocionalAtualIndex > 0) {
+      const newIndex = devocionalAtualIndex - 1;
       setDevocionalAtualIndex(newIndex);
       setDevocionalAtual(devocionaisComDatas[newIndex]);
     }
   };
 
   const handleNext = () => {
-    if (devocionalAtualIndex > 0) {
-      const newIndex = devocionalAtualIndex - 1;
+    if (devocionalAtualIndex < devocionaisComDatas.length - 1) {
+      const newIndex = devocionalAtualIndex + 1;
       setDevocionalAtualIndex(newIndex);
       setDevocionalAtual(devocionaisComDatas[newIndex]);
     }
@@ -63,9 +91,9 @@ const Devocionais = () => {
           <p className="devocional-instruction">Selecione um devocional.<br />Utilize as setas para navegar entre as datas.</p>
           <div className="devocional-content">
             <button
-              className={`nav-arrow left-arrow ${devocionalAtualIndex === devocionaisComDatas.length - 1 ? 'disabled' : ''}`}
+              className={`nav-arrow left-arrow ${devocionalAtualIndex === 0 ? 'disabled' : ''}`}
               onClick={handlePrevious}
-              disabled={devocionalAtualIndex === devocionaisComDatas.length - 1}
+              disabled={devocionalAtualIndex === 0}
             >
               <span className="arrow-icon">{'<'}</span>
             </button>
@@ -77,9 +105,9 @@ const Devocionais = () => {
               </div>
             )}
             <button
-              className={`nav-arrow right-arrow ${devocionalAtualIndex === 0 ? 'disabled' : ''}`}
+              className={`nav-arrow right-arrow ${devocionalAtualIndex === devocionaisComDatas.length - 1 ? 'disabled' : ''}`}
               onClick={handleNext}
-              disabled={devocionalAtualIndex === 0}
+              disabled={devocionalAtualIndex === devocionaisComDatas.length - 1}
             >
               <span className="arrow-icon">{'>'}</span>
             </button>
