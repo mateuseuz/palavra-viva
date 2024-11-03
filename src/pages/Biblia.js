@@ -106,11 +106,21 @@ const Biblia = () => {
   ];
 
   useEffect(() => {
+    setCapituloSelecionado(1);
+  }, [livroSelecionado]);
+
+  useEffect(() => {
     const carregarTexto = () => {
       if (livrosCurtos[livroSelecionado]) {
-        const texto = livrosCurtos[livroSelecionado][capituloSelecionado].join(' ');
-        setTextoBiblia(texto);
-        setErroCarregamento('');
+        const textoArray = livrosCurtos[livroSelecionado][capituloSelecionado];
+        if (textoArray) {
+          const texto = textoArray.join(' ');
+          setTextoBiblia(texto);
+          setErroCarregamento('');
+        } else {
+          setTextoBiblia('');
+          setErroCarregamento('Capítulo não encontrado.');
+        }
       } else {
         fetch(`https://bible-api.com/${livroSelecionado}%20${capituloSelecionado}?translation=almeida`)
           .then((response) => {
@@ -118,7 +128,6 @@ const Biblia = () => {
             return response.json();
           })
           .then((data) => {
-            // Corrigindo espaços extras antes dos números dos versículos
             const texto = data.verses.map(verso => `<sup>[${verso.verse}]</sup> ${verso.text.replace(/\s{2,}/g, ' ')}`).join(' ');
             setTextoBiblia(texto);
             setErroCarregamento('');
