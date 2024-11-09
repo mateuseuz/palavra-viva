@@ -19,6 +19,18 @@ a {
   color: #86a1b0;
 }
 
+.page-views-counter {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 5px 15px;
+  font-size: 14px;
+  font-weight: bold;
+  z-index: 1000; /* Garante que o contador fique acima dos outros elementos */
+  border-radius: 0 0 8px 8px;
+}
+
 .container {
   width: 90%;
   max-width: 1200px;
