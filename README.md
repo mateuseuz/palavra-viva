@@ -4,5 +4,4 @@
 
 Link do blog do Palavra Viva: [Clique aqui](https://pe-palavraviva.blogspot.com/)   
 Link da documentação do projeto: [Clique aqui](https://pe-palavraviva.blogspot.com/p/documentacao.html)   
-Link do vídeo de apresentação do projeto: [Clique aqui](https://youtube.com/)   
-Link da apresentção de slides: [Clique aqui](https://tome.app/queles-pique/palavra-viva-clud1463801klo362vqot6vvi)
+Link da apresentação de slides: [Clique aqui](https://tome.app/queles-pique/palavra-viva-clud1463801klo362vqot6vvi)
